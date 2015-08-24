@@ -1,0 +1,16 @@
+body { 
+	padding-top: 70px;
+}
+.vertical-center {
+	margin-top: 20%;
+}
+.search-box {
+	width: 40%;
+	height: 15%;
+	font-size: 2em;
+	border-radius: 20px;
+}
+
+.center{
+	margin: auto;
+}

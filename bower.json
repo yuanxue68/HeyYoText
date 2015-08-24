@@ -1,0 +1,11 @@
+{
+	"name":"HeyYoText",
+	"dependencies":{
+		"jquery": "x",
+		"jquery-ui": "x",
+		"underscore": "x",
+		"angular": "x",
+		"angular-ui-router":"x",
+		"bootstrap":"x"
+	}
+}
