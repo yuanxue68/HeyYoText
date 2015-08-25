@@ -1,0 +1,4 @@
+<div class="alert" ng-class="{'alert-success':flash.success, 'alert-info':!flash.success}" ng-show="flash.getMessage()" >
+	 <a class="close "ng-click="flash.clear()">&times;</a>
+	{{flash.getMessage()}}
+</div>

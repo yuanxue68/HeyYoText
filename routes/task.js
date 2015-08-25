@@ -24,4 +24,10 @@ router.get('/',function(req,res,next){
 	});
 });
 
+router.delete('/:id',function(req,res,next){
+	task.deleteTask(req.params.id,function(data){
+		res.json(data);
+	});
+});
+
 module.exports = router

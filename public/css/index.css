@@ -11,6 +11,43 @@ body {
 	border-radius: 20px;
 }
 
+.container{
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+.tasks{
+	text-align: center;
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
 .center{
 	margin: auto;
 }
+
+.alignLeft{
+	float: left;
+	width:33.33333%;
+	text-align:left;
+}
+
+.alignCenter {
+  float: left;
+  width:33.33333%;
+  text-align:center;
+}
+
+.clear {
+    overflow: hidden;
+    display: inline-block; /* Necessary to trigger "hasLayout" in IE */
+    display: block; /* Sets element back to block */
+}
+
+h1{
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 2%;
+}
+
+

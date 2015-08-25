@@ -21,8 +21,9 @@ function saveTask(task){
 	client.hset('tasks',task.id, JSON.stringify(task));
 }
 
-function deleteTask(id){
+function deleteTask(id,callBack){
 	client.hdel('tasks',id);
+	callBack();
 }
 
 module.exports.getAllTasks=getAllTasks;

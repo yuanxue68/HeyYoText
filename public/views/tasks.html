@@ -1,10 +1,10 @@
 <div>
-	<div ng-repeat="task in tasks">
+	<h1>Existing Tasks</h1>
+	<div class="tasks well well-sm clear" ng-repeat="task in tasks">
 		<div>
-			{{task.id}}
-		</div>
-		<div>
-			{{task.body}}
+			<a ng-click="deleteTask(task.id)" class="close">&times;</a>
+			<span class="alignLeft">{{task.id}}</span>
+			<span class="alignCenter">{{task.body}}</span>
 		</div>
 	</div>
 </div>
