@@ -5,14 +5,15 @@ var router=express.Router();
 var task=require('./../models/task')
 
 router.post('/',function(req,res,next){
-	process.stdout.write(req.body.data);
-	currentTask={
-		id:Date.now(),
-		body:req.body.data
-	};
-	task.saveTask(currentTask);
-	utils.sendText(req.body.data);
-	res.json(req.body);
+	try{
+		currentTask=utils.parseMsg(req.body.data);
+		task.saveTask(currentTask);
+		utils.sendText(req.body.data);
+		res.json(req.body);
+	} catch(e){
+		res.status(500).json({ error: e });
+	}
+
 });
 
 router.get('/',function(req,res,next){

@@ -13,10 +13,6 @@ function getAllTasks(callBack){
 	});
 }
 
-function getTask(id){
-	client.hget('tasks',id);
-}
-
 function saveTask(task){
 	client.hset('tasks',task.id, JSON.stringify(task));
 }
@@ -27,6 +23,5 @@ function deleteTask(id,callBack){
 }
 
 module.exports.getAllTasks=getAllTasks;
-module.exports.getTask=getTask;
 module.exports.saveTask=saveTask;
 module.exports.deleteTask=deleteTask;
