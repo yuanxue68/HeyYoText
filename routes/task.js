@@ -2,7 +2,7 @@ var env=process.env;
 var express=require('express');
 var utils=require('./utils');
 var router=express.Router();
-var task=require('./../models/task')
+var task=require('./../models/taskmodel');
 
 router.post('/',function(req,res,next){
 	try{
@@ -31,4 +31,4 @@ router.delete('/:id',function(req,res,next){
 	});
 });
 
-module.exports = router
+module.exports = router;

@@ -10,7 +10,7 @@ var logger = require('morgan');
 var routes=require("./routes/index");
 var task=require("./routes/task");
 var utils=require('./routes/utils');
-var taskModel=require('./models/task')
+var taskModel=require('./models/taskmodel');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/task', task);
 
 //check if any task is past its timer
-setInterval(function(){
+setInterval(function tick(){
 	taskModel.getAllTasks(function(data){
 		allTasks=data;
 		for (var i=0;i<allTasks.length; i++){
@@ -36,6 +36,9 @@ setInterval(function(){
 		console.log(allTasks);
 	});
 }, 1000);
+
+
+
 
 app.listen(8080);
 console.log("App listening on port 8080");

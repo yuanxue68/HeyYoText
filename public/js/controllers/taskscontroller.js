@@ -12,7 +12,7 @@ angular.module("heyyo").controller("TasksController",function($scope,$http,flash
 	$scope.deleteTask=function(id,index){
 		$http.delete("/api/task/"+id)
 		.success(function(){
-			console.log(index)
+			console.log(index);
 			$scope.tasks.splice(index,1);
 		})
 		.error(function(err){
