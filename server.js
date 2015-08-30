@@ -9,6 +9,7 @@ var logger = require('morgan');
 
 var routes=require("./routes/index");
 var task=require("./routes/task");
+var text=require("./routes/text");
 var utils=require('./routes/utils');
 var taskModel=require('./models/taskmodel');
 
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/task', task);
+app.use('/api/text', text);
 
 //check if any task is past its timer
 setInterval(function tick(){
@@ -25,15 +27,12 @@ setInterval(function tick(){
 		for (var i=0;i<allTasks.length; i++){
 			task=allTasks[i];
 			currentTS=Date.now();
-			console.log(currentTS);
-			console.log(task);
 			if (currentTS>(task.id)){
 				taskModel.deleteTask(task.id,function(){
 					utils.sendText("Times Up! : "+task.body);
 				});
 			}
 		}
-		console.log(allTasks);
 	});
 }, 1000);
 

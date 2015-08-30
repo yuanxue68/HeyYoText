@@ -20,7 +20,6 @@ function parseMsg(message){
 		parsedMsg=message.split(" ");
 		//should be format of 2015-08-27 22:55:00 
 		if(parsedMsg.length<3){
-			console.log("less than 3");
 			throw "bad format";
 		}
 		//parse out the ts of the message
@@ -39,8 +38,6 @@ function parseMsg(message){
 		if (!task.id || !task.body){
 			throw "bad format";
 		}
-		console.log("task ts "+task.id);
-		console.log("date ts "+ new Date().getTime());
 		return task;
 	} catch(e){
 		throw e;

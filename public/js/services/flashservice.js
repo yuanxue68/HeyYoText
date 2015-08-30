@@ -2,6 +2,8 @@ angular.module('heyyo')
 .factory('flash',function($rootScope){
 	var queue=[];
 	var currentMessage="";
+  //push out the old value of flash message and push in the
+  //new one, if no glash message just push in empty string 
 	$rootScope.$on("flash", function() {
     	currentMessage = queue.shift() || "";
   	});
