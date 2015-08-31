@@ -1,0 +1,13 @@
+[{
+	"command":"Status",
+	"description":"List All Tasks"
+},
+{
+	"command":"Delete <Task ID>",
+	"description":"Delete The Task With The Specified ID"
+},
+{
+	"command":"yyyy-mm-dd hh:mm:ss <Task Description>",
+	"description":"Create a Task At The Time Specified"
+}]
+

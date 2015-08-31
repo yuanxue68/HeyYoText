@@ -1,1 +1,9 @@
-<h1>help</h1>
+<div ng-controller="HelpController">
+	<h1>Help</h1>
+	<div ng-repeat="help in helps">
+		<div class="help">
+			<strong>{{help.command}}: </strong>
+			<span>{{help.description}}</span>
+		</div>
+	</div>
+</div>

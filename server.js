@@ -7,7 +7,7 @@ var app=express();
 var redis=require("redis");
 var logger = require('morgan');
 
-var routes=require("./routes/index");
+var index=require("./routes/index");
 var task=require("./routes/task");
 var text=require("./routes/text");
 var utils=require('./routes/utils');
@@ -17,6 +17,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', index);
 app.use('/api/task', task);
 app.use('/api/text', text);
 
