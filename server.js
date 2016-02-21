@@ -23,22 +23,29 @@ app.use('/api/text', text);
 
 //check if any task is past its timer
 setInterval(function tick(){
-	taskModel.getAllTasks(function(data){
+	taskModel.getTasksByNumber("+16472958956", function(err, data){
+		if(err){
+
+		}
+		console.log(data);
 		allTasks=data;
 		for (var i=0;i<allTasks.length; i++){
 			task=allTasks[i];
 			currentTS=Date.now();
 			if (currentTS>(task.id)){
-				taskModel.deleteTask(task.id,function(){
-					utils.sendText("Times Up! : "+task.body);
+				taskModel.deleteTask("+16472958956", task, function(err){
+					if (!err) {
+						utils.sendText("Times Up! : "+task.body);
+					}
 				});
 			}
 		}
+
 	});
 }, 1000);
 
 
 
 
-app.listen(8080);
+app.listen(8090);
 console.log("App listening on port 8080");

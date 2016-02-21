@@ -7,6 +7,7 @@ router.post('/',function(req,res,next){
 
 	try{
 		currentTask=utils.parseMsg(req.body.data);
+		console.log(req.body);
 		taskmodel.saveTask(currentTask);
 		utils.sendText(req.body.data);
 		res.json(req.body);
