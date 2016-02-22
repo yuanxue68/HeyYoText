@@ -4,6 +4,7 @@ var taskmodel=require('./../models/taskmodel');
 var utils=require('./utils');
 var env = process.env;
 var scheduler = require('node-schedulerjs');
+var messageHandler = require('./messageHandler');
 
 router.post('/',function(req,res,next){
   try{
@@ -12,78 +13,31 @@ router.post('/',function(req,res,next){
     var messageArr=message.split(' ');
 
     if(messageArr[0].toUpperCase()==='delete'.toUpperCase()){
-      taskmodel.getTasksById(fromNumber, messageArr[1], function(err, task){
+      messageHandler.deleteTask(messageArr[1], fromNumber, function(err){
         if(err){
-          utils.sendText("Error finding task "+messageArr[1]);
-          return res.status(400).send("Error finding task "+messageArr[1]);
+          return res.status(400).send(err);
         }
-        console.log("task is !!!!");
-        console.log(task);
-        if(!task){
-          utils.sendText("Cant find task "+messageArr[1]);
-          return res.status(400).send("Cant find task "+messageArr[1]);
-        }
-
-        taskmodel.deleteTask(fromNumber, task, function(err, data){
-          if(err){
-            utils.sendText("Error deleting");
-            return res.status(400).send("Error deleting");
-          } else {
-            if(global.schedulers[task.id]){
-              global.schedulers[task.id].stop();
-            }
-            delete(global.schedulers[task.id]);
-            utils.sendText("Successfully deleted ");
-            return res.json(data);
-          }
-        });
+        res.send('OK');
       });
 
     } else if (messageArr[0].toUpperCase()==='status'.toUpperCase()){
-
-      taskmodel.getTasksByNumber(fromNumber, function(err, data){
-        allTasks=data;
-
-        var formattedText='';
-        for(var i=0;i<allTasks.length;i++){
-          formattedText=formattedText+" "+allTasks[i].id+" " +allTasks[i].body+"  ||  ";
+      messageHandler.checkStatus(fromNumber, function(err){
+        if(err){
+          return res.status(400).send(err);
         }
-        if(!formattedText){
-          utils.sendText("No Tasks From Your Number");
-        } else {
-          utils.sendText(JSON.stringify(formattedText));
-        }
-        return res.json(allTasks);
+        return res.send('OK');
       });
 
     } else {
-      currentTask=utils.parseMsg(message);
-      taskmodel.saveTask(currentTask, fromNumber);
-      utils.sendText("Successfully created task "+currentTask.id);
-
-      reminderTime = new Date(currentTask.id);
-      console.log(reminderTime);
-      global.schedulers[currentTask.id] = new scheduler(reminderTime, function(err){
+      messageHandler.createTask(fromNumber, message, function(err){
         if(err){
-          global.schedulers[currentTask.id];
-          tils.sendText("Error setting up timer, please try delete and create this reminder, task id: "+currentTask.body);
+          return res.status(400).send(err);
         }
-        taskmodel.deleteTask(fromNumber, currentTask, function(err){
-          if(err){
-            console.log(err);
-          }
-          utils.sendText("Times Up! : "+currentTask.body);
-        });
-
       });
-      global.schedulers[currentTask.id].start();
-      console.log("########"+schedulers);
-      console.log(JSON.stringify(Object.keys(global.schedulers)));
-      return res.json(req.body);
+      return res.send('OK');
     }
 
   } catch(e){
-    console.log(e);
     utils.sendText("ERROR, make sure your command is valid");
     return res.status(500).json({ error: e });
   }

@@ -25,8 +25,6 @@ app.use('/api/text', text);
 global.schedulers = {};
 // initial set up, schedule all the reminder thats already in the database
 taskModel.getAllTasks(function(err, data){
-	console.log("all data is");
-	console.log(data);
 	for (var key in data){
 		data[key].forEach(function(task){
 			var reminderTime = new Date(task.id);
@@ -47,8 +45,6 @@ taskModel.getAllTasks(function(err, data){
 		});
 	}
 });
-
-console.log(global.schedulers);
 
 app.listen(8090);
 console.log("App listening on port 8090");
