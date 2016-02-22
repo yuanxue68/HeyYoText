@@ -29,6 +29,12 @@ function getAllTasks(callBack){
   });
 }
 
+function deleteAllTasks(number, callBack){
+  client.del(number, function(err){
+    callBack(err);
+  });
+}
+
 function getTasksByNumber(number, callBack){
   client.smembers(number, function(err, data){
     if(err){
@@ -77,3 +83,4 @@ module.exports.getAllTasks = getAllTasks;
 module.exports.saveTask = saveTask;
 module.exports.deleteTask = deleteTask;
 module.exports.getTasksByNumber = getTasksByNumber;
+module.exports.deleteAllTasks = deleteAllTasks;

@@ -12,7 +12,7 @@ router.post('/',function(req,res,next){
     var message=req.body.Body.trim();
     var messageArr=message.split(' ');
 
-    if(messageArr[0].toUpperCase()==='delete'.toUpperCase()){
+    if(messageArr[0].toUpperCase() === 'delete'.toUpperCase()){
       messageHandler.deleteTask(messageArr[1], fromNumber, function(err){
         if(err){
           return res.status(400).send(err);
@@ -20,7 +20,7 @@ router.post('/',function(req,res,next){
         res.send('OK');
       });
 
-    } else if (messageArr[0].toUpperCase()==='status'.toUpperCase()){
+    } else if (messageArr[0].toUpperCase() === 'status'.toUpperCase()){
       messageHandler.checkStatus(fromNumber, function(err){
         if(err){
           return res.status(400).send(err);
@@ -28,6 +28,14 @@ router.post('/',function(req,res,next){
         return res.send('OK');
       });
 
+    } else if (messageArr[0].toUpperCase() ==='deleteall'.toUpperCase()){
+      messageHandler.deleteAll(fromNumber, function(err){
+        if(err){
+          return res.status(400).send(err);
+        }
+
+        return res.send('OK');
+      });
     } else {
       messageHandler.createTask(fromNumber, message, function(err){
         if(err){
@@ -38,6 +46,7 @@ router.post('/',function(req,res,next){
     }
 
   } catch(e){
+    console.log(e);
     utils.sendText("ERROR, make sure your command is valid");
     return res.status(500).json({ error: e });
   }

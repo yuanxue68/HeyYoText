@@ -11,6 +11,7 @@ function sendText(message){
 		from: env.twilioAssignedPhoneNumber,
 		body: message
 	}, function(err, responseData){
+		console.log(err);
 		console.log(responseData);
 	});
 }

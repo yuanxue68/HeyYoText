@@ -72,6 +72,17 @@ function createTask(fromNumber, message, cb){
   global.schedulers[currentTask.id].start();
 }
 
+function deleteAll(fromNumber, cb){
+  taskmodel.deleteAllTasks(fromNumber, function(err){
+    if(err){
+      return cb(err)
+    }
+    utils.sendText("deleted all");
+    return cb(null);
+  })
+}
+
 module.exports.deleteTask = deleteTask;
 module.exports.checkStatus = checkStatus;
 module.exports.createTask = createTask;
+module.exports.deleteAll = deleteAll;
