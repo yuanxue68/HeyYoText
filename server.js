@@ -6,6 +6,7 @@ var http=require("http");
 var app=express();
 var redis=require("redis");
 var logger = require('morgan');
+var scheduler = require('node-schedulerjs');
 
 var index=require("./routes/index");
 var task=require("./routes/task");
@@ -22,40 +23,32 @@ app.use('/api/task', task);
 app.use('/api/text', text);
 
 global.schedulers = {};
-
-//check if any task is past its timer
-/*setInterval(function tick(){
-	taskModel.getAllTasks(function(err, data){
-		console.log("all data is")
-		console.log(data);
-	});
-
-	taskModel.getTasksByNumber("+16472958956", function(err, data){
-		if(err){
-			console.log(err);
-		}
-		console.log("from number 647 296 8956");
-		console.log(data);
-		allTasks=data;
-		for (var i=0;i<allTasks.length; i++){
-			task=allTasks[i];
-			currentTS=Date.now();
-			if (currentTS>(task.id)){
-				taskModel.deleteTask("+16472958956", task, function(err){
-					if (!err) {
-						utils.sendText("Times Up! : "+task.body);
+// initial set up, schedule all the reminder thats already in the database
+taskModel.getAllTasks(function(err, data){
+	console.log("all data is");
+	console.log(data);
+	for (var key in data){
+		data[key].forEach(function(task){
+			var reminderTime = new Date(task.id);
+			var now = new Date();
+			if(reminderTime > now){
+				console.log(reminderTime);
+				global.schedulers[task.id] = new scheduler(reminderTime, function(err){
+					if(err){
+						console.log(err);
 					}
+					utils.sendText("Times Up! : "+task.body);
+					taskModel.deleteTask(key, task, function(){});
 				});
+				global.schedulers[task.id].start();
+			} else {
+				taskModel.deleteTask(key, task, function(){}); // delete outdated reminder
 			}
-		}
+		});
+	}
+});
 
-	});
-}, 1000);*/
-
-
-
-
-
+console.log(global.schedulers);
 
 app.listen(8090);
-console.log("App listening on port 8080");
+console.log("App listening on port 8090");

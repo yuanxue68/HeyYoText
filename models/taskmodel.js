@@ -8,20 +8,24 @@ function getAllTasks(callBack){
     if(err){
       callBack(err);
     }
-    var tasks = [];
+
+    var tasks = {};
     var guard = 0;
+
     if(!data || data.length === 0){
       callBack(null, tasks);
     }
-    for(var key in data){
-      getTasksByNumber(key, function(err, data){
+
+    data.forEach(function(key){
+      getTasksByNumber(key, function(err, taskSet){
         guard++;
-        tasks.push(data);
+        tasks[key] = taskSet;
         if(guard === data.length){
           callBack(null, tasks);
         }
-      })
-    }
+      });
+    });
+
   });
 }
 

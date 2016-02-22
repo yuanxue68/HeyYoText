@@ -33,8 +33,6 @@ router.post('/',function(req,res,next){
               global.schedulers[task.id].stop();
             }
             delete(global.schedulers[task.id]);
-            console.log("########"+schedulers);
-            console.log(JSON.stringify(Object.keys(global.schedulers)));
             utils.sendText("Successfully deleted ");
             return res.json(data);
           }
@@ -49,7 +47,6 @@ router.post('/',function(req,res,next){
         var formattedText='';
         for(var i=0;i<allTasks.length;i++){
           formattedText=formattedText+" "+allTasks[i].id+" " +allTasks[i].body+"  ||  ";
-          console.log(formattedText);
         }
         if(!formattedText){
           utils.sendText("No Tasks From Your Number");
