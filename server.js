@@ -21,12 +21,20 @@ app.use('/', index);
 app.use('/api/task', task);
 app.use('/api/text', text);
 
+global.schedulers = {};
+
 //check if any task is past its timer
-setInterval(function tick(){
+/*setInterval(function tick(){
+	taskModel.getAllTasks(function(err, data){
+		console.log("all data is")
+		console.log(data);
+	});
+
 	taskModel.getTasksByNumber("+16472958956", function(err, data){
 		if(err){
-
+			console.log(err);
 		}
+		console.log("from number 647 296 8956");
 		console.log(data);
 		allTasks=data;
 		for (var i=0;i<allTasks.length; i++){
@@ -42,7 +50,9 @@ setInterval(function tick(){
 		}
 
 	});
-}, 1000);
+}, 1000);*/
+
+
 
 
 

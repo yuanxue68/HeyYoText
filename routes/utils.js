@@ -5,7 +5,7 @@ var client=require("twilio")(env.twilioAccountSid, env.twilioAuthToken);
 function sendText(message){
 	if (env.supressTextMessages==="true") 
 		return;
-
+	console.log("SENDING!!! "+message);
 	client.sendSms({
 		to: env.mobile,
 		from: env.twilioAssignedPhoneNumber,
