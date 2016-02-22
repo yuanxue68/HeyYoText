@@ -17,10 +17,13 @@ function getAllTasks(callBack){
     }
 
     data.forEach(function(key){
+      if(key === "taskId"){
+        return;
+      }
       getTasksByNumber(key, function(err, taskSet){
         guard++;
         tasks[key] = taskSet;
-        if(guard === data.length){
+        if(guard === data.length - 1){
           callBack(null, tasks);
         }
       });
@@ -57,7 +60,7 @@ function getTasksById(number, id, callBack){
       console.log("data is");
       console.log(data);
       for (var i = 0; i<data.length; i++){
-        task = JSON.parse(data[i])
+        task = JSON.parse(data[i]);
         if(Number(task.id) === Number(id)){
           callBack(null, task);
           return;
@@ -78,9 +81,16 @@ function deleteTask(number, task, callBack){
   });
 }
 
+function createTaskId(cb){
+  client.incr("taskId", function(err, data){
+    cb(err, data);
+  });
+}
+
 module.exports.getTasksById = getTasksById;
 module.exports.getAllTasks = getAllTasks;
 module.exports.saveTask = saveTask;
 module.exports.deleteTask = deleteTask;
 module.exports.getTasksByNumber = getTasksByNumber;
 module.exports.deleteAllTasks = deleteAllTasks;
+module.exports.createTaskId = createTaskId;

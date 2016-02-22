@@ -25,9 +25,11 @@ app.use('/api/text', text);
 global.schedulers = {};
 // initial set up, schedule all the reminder thats already in the database
 taskModel.getAllTasks(function(err, data){
-	for (var key in data){
+	if(! data)
+		return;
+	Object.keys(data).forEach(function(key){
 		data[key].forEach(function(task){
-			var reminderTime = new Date(task.id);
+			var reminderTime = new Date(task.ts);
 			var now = new Date();
 			if(reminderTime > now){
 				console.log(reminderTime);
@@ -43,7 +45,7 @@ taskModel.getAllTasks(function(err, data){
 				taskModel.deleteTask(key, task, function(){}); // delete outdated reminder
 			}
 		});
-	}
+	});
 });
 
 app.listen(8090);

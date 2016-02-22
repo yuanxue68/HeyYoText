@@ -29,7 +29,7 @@ var deleteTask = function(id, fromNumber, cb) {
       }
     });
   });
-}
+};
 
 var checkStatus = function(fromNumber, cb){
   taskmodel.getTasksByNumber(fromNumber, function(err, data){
@@ -46,40 +46,54 @@ var checkStatus = function(fromNumber, cb){
     }
     return cb(null);
   });
-}
+};
 
 function createTask(fromNumber, message, cb){
-  var currentTask=utils.parseMsg(message);
+  var currentTask=utils.parseMsg(message, function(currentTask){
+    taskmodel.saveTask(currentTask, fromNumber);
+    utils.sendText("Successfully created task "+currentTask.id);
 
-  taskmodel.saveTask(currentTask, fromNumber);
-  utils.sendText("Successfully created task "+currentTask.id);
-
-  var reminderTime = new Date(currentTask.id);
-  global.schedulers[currentTask.id] = new scheduler(reminderTime, function(err){
-    if(err){
-      delete global.schedulers[currentTask.id];
-      utils.sendText("Error setting up timer, please try delete and create this reminder, task id: "+currentTask.body);
-      cb(err);
-    }
-    taskmodel.deleteTask(fromNumber, currentTask, function(err){
+    var reminderTime = new Date(currentTask.ts);
+    console.log(reminderTime);
+    global.schedulers[currentTask.id] = new scheduler(reminderTime, function(err){
       if(err){
+        delete global.schedulers[currentTask.id];
+        utils.sendText("Error setting up timer, please try delete and create this reminder, task id: "+currentTask.body);
         cb(err);
       }
-      utils.sendText("Times Up! : "+currentTask.body);
-    });
+      taskmodel.deleteTask(fromNumber, currentTask, function(err){
+        if(err){
+          cb(err);
+        }
+        utils.sendText("Times Up! : "+currentTask.body);
+      });
 
+    });
+    global.schedulers[currentTask.id].start();
   });
-  global.schedulers[currentTask.id].start();
 }
 
 function deleteAll(fromNumber, cb){
-  taskmodel.deleteAllTasks(fromNumber, function(err){
+  taskmodel.getTasksByNumber(fromNumber, function(err, data){
     if(err){
-      return cb(err)
+      cb(err);
     }
-    utils.sendText("deleted all");
-    return cb(null);
-  })
+
+    data.forEach(function(task){
+      if(schedulers[task.id]){
+        global.schedulers[task.id].stop();
+        delete global.schedulers[task.id];
+      }
+    });
+
+    taskmodel.deleteAllTasks(fromNumber, function(err){
+      if(err){
+        return cb(err);
+      }
+      utils.sendText("deleted all");
+      return cb(null);
+    });
+  });
 }
 
 module.exports.deleteTask = deleteTask;

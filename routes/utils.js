@@ -1,4 +1,5 @@
 var env = process.env;
+var taskModel = require('./../models/taskmodel');
 var client=require("twilio")(env.twilioAccountSid, env.twilioAuthToken);
 
 
@@ -16,7 +17,7 @@ function sendText(message){
 	});
 }
 
-function parseMsg(message){
+function parseMsg(message, cb){
 	try{
 		parsedMsg=message.split(" ");
 		//should be format of 2015-08-27 22:55:00 
@@ -32,15 +33,22 @@ function parseMsg(message){
 		sec=parseInt(time[2]);
 		ts=ts+sec+(60*min)+(3600*hour);
 		//contrsut task to pass into redis
-		task={
-			id:ts,
-			body:parsedMsg.join(' ')
-		};
-		if (!task.id || !task.body){
-			throw "bad format";
-		}
-		return task;
+		taskModel.createTaskId(function(err, id){
+			console.log("---------");
+			console.log(id);
+			var task = {
+				id:id,
+				body:parsedMsg.join(' '),
+				ts:ts
+			};
+			if (!task.id || !task.body || !task.ts){
+				throw "bad format";
+			}
+			cb(task);
+		});
+	
 	} catch(e){
+		console.log(e);
 		throw e;
 	}
 
