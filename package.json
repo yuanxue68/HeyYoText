@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "bower install"
   },
   "author": "yuan xue",
   "license": "ISC",
@@ -33,6 +34,5 @@
     "grunt-env": "^0.4.4",
     "grunt-nodemon": "^0.4.0",
     "localtunnel": "^1.7.0"
-  },
-  "postinstall": "bower install"
+  }
 }
