@@ -1,6 +1,7 @@
 # HeyYoText
+[List of Commands](https://enigmatic-ridge-44202.herokuapp.com/#/help) 
+
 A simple web app that allow you to create modify and receive reminders through sms using twilio
-[List of Commands](https://enigmatic-ridge-44202.herokuapp.com/#/help)  
 Trial account cant send messages to unverifield account, so wont wont be able to try it on this hosting :(
 
 # How to run it locally:
