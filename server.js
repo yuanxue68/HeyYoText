@@ -4,7 +4,6 @@ var path = require('path');
 var bodyParser=require('body-parser');
 var http=require("http");
 var app=express();
-var redis=require("redis");
 var logger = require('morgan');
 var scheduler = require('node-schedulerjs');
 var validator = require('express-validator');
