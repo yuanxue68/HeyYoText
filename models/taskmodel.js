@@ -1,7 +1,7 @@
 var redis=require('redis');
 var client=null;
 
-client=redis.createClient();
+client=redis.createClient({url:process.env.REDIS_URL});
 
 function getAllTasks(callBack){
   client.keys('*', function(err, data){

@@ -10,7 +10,6 @@ var scheduler = require('node-schedulerjs');
 var validator = require('express-validator');
 
 var index=require("./routes/index");
-var task=require("./routes/task");
 var text=require("./routes/text");
 var utils=require('./routes/utils');
 var taskModel=require('./models/taskmodel');
