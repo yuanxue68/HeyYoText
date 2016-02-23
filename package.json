@@ -32,5 +32,6 @@
     "grunt-env": "^0.4.4",
     "grunt-nodemon": "^0.4.0",
     "localtunnel": "^1.7.0"
-  }
+  },
+  "postinstall": "bower install"
 }
