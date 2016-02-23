@@ -1,8 +1,13 @@
 var redis=require('redis');
 var client=null;
 
-client=redis.createClient({url:process.env.REDIS_URL});
+client = redis.createClient(process.env.REDIS_PORT, 
+                            process.env.REDIS_HOST, 
+                            {no_ready_check: true});
 
+
+console.log(process.env.REDIS_URL);
+console.log(client);
 function getAllTasks(callBack){
   client.keys('*', function(err, data){
     if(err){
