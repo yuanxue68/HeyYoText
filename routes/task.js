@@ -17,9 +17,13 @@ router.post('/',function(req,res,next){
 
 });
 
-router.get('/',function(req,res,next){
+router.get('/:number',function(req,res,next){
 	var allTasks;
-	taskmodel.getAllTasks(function(data){
+	console.log(req.params);
+	taskmodel.getTasksByNumber(req.params.number, function(err, data){
+		if(err){
+			console.log(err);
+		}
 		allTasks=data;
 		console.dir(allTasks);
 		res.json(allTasks);

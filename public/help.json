@@ -1,13 +1,17 @@
 [{
 	"command":"Status",
-	"description":"List All Tasks"
+	"description":"List all tasks and their ID"
 },
 {
-	"command":"Delete <Task ID>",
-	"description":"Delete The Task With The Specified ID"
+	"command":"Delete <reminder ID>",
+	"description":"Delete the reminder with this ID"
 },
 {
 	"command":"yyyy-mm-dd hh:mm:ss <Task Description>",
-	"description":"Create a Task At The Time Specified"
+	"description":"Create a reminder at the time specified using the date format (example: \"2016-09-05 15:34:00 Take a Break!!\")"
+},
+{
+	"command":"Deleteall",
+	"description":"Delete all your reminders"
 }]
 

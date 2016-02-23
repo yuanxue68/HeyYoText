@@ -1,5 +1,11 @@
 <div>
 	<h1>Existing Tasks</h1>
+	<div class="input-group">
+    <input type="text" class="form-control" placeholder="Type in your phone number" ng-model="form.number">
+    <span class="input-group-btn" ng-model="form.number">
+      <button class="btn btn-default" type="button" ng-click="getTasks()">Go!</button>
+    </span>
+  </div>
 	<div class="tasks well well-sm clear" ng-repeat="task in tasks">
 		<div>
 			<a ng-click="deleteTask(task.id)" class="close">&times;</a>

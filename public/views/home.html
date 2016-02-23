@@ -1,10 +1,13 @@
-<div class="vertical-center"ng-controller="HomeController">
+<div ng-controller="HomeController">
 	<h1>Hey Yo</h1>
-	<form ng-submit="submit()" class="input-group center">
-		<input ng-model="command" class="form-control" type="text" placeholder="Example: 2013-09-05 15:34:00 Take a Break!!"/>
+  <h4> Trial accounts cannot send messages to unverified numbers, it only works with my number :(</div>
+  <div>Text to 437 800 2736 to create reminders, or use the following form (example: "2016-09-05 15:34:00 Take a Break!!")</div>
+	<form  class="input-group center">
+		<input ng-model="form.Body" class="form-control" type="text" placeholder="reminder Example: 2013-09-05 15:34:00 Take a Break!!"/>
+    <input ng-model="form.From" class="form-control" type="text" placeholder="your phone numbe Example: +16472835566"/>
 		<span class="input-group-btn">
-       		<button class="btn btn-default center" type="submit">Go!</button>
-      	</span>
+       		<button class="btn btn-default center" ng-click="submit()">Go!</button>
+    </span>
 	</form>
 	<flash></flash>
 </div>

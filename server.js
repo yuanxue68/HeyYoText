@@ -7,6 +7,7 @@ var app=express();
 var redis=require("redis");
 var logger = require('morgan');
 var scheduler = require('node-schedulerjs');
+var validator = require('express-validator');
 
 var index=require("./routes/index");
 var task=require("./routes/task");
@@ -17,9 +18,9 @@ var taskModel=require('./models/taskmodel');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(validator());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
-app.use('/api/task', task);
 app.use('/api/text', text);
 
 global.schedulers = {};
@@ -37,7 +38,7 @@ taskModel.getAllTasks(function(err, data){
 					if(err){
 						console.log(err);
 					}
-					utils.sendText("Times Up! : "+task.body);
+					utils.sendText("Times Up! : "+task.body, key);
 					taskModel.deleteTask(key, task, function(){});
 				});
 				global.schedulers[task.id].start();

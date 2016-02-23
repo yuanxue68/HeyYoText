@@ -6,14 +6,14 @@ client=redis.createClient();
 function getAllTasks(callBack){
   client.keys('*', function(err, data){
     if(err){
-      callBack(err);
+      return callBack(err);
     }
 
     var tasks = {};
     var guard = 0;
 
     if(!data || data.length === 0){
-      callBack(null, tasks);
+      return callBack(null, tasks);
     }
 
     data.forEach(function(key){
@@ -24,7 +24,7 @@ function getAllTasks(callBack){
         guard++;
         tasks[key] = taskSet;
         if(guard === data.length - 1){
-          callBack(null, tasks);
+          return callBack(null, tasks);
         }
       });
     });
@@ -41,13 +41,13 @@ function deleteAllTasks(number, callBack){
 function getTasksByNumber(number, callBack){
   client.smembers(number, function(err, data){
     if(err){
-      callBack(err);
+      return callBack(err);
     }
     var tasks=[];
     for (var key in data){
       tasks.push(JSON.parse(data[key]));
     }
-    callBack(err, tasks);
+    return callBack(err, tasks);
   });
 }
 
@@ -55,18 +55,16 @@ function getTasksById(number, id, callBack){
   var task;
   client.smembers(number, function(err, data){
     if(err){
-      callBack(err);
+      return callBack(err);
     } else {
-      console.log("data is");
-      console.log(data);
       for (var i = 0; i<data.length; i++){
         task = JSON.parse(data[i]);
         if(Number(task.id) === Number(id)){
-          callBack(null, task);
-          return;
+
+          return callBack(null, task);
         }
       }
-      callBack(null, null);
+      return callBack(null, null);
     }
   });
 }

@@ -1,7 +1,8 @@
 angular.module("heyyo").controller("HomeController",function($scope,$http,flash){
 	$scope.flash = flash;
+	$scope.form={};
 	$scope.submit=function(){
-		$http({method:"POST",url:"/api/task/", data:{data:$scope.command}})
+		$http({method:"POST",url:"/api/text/", data:$scope.form})
 		.success(function(data){
 			flash.setMessage("Success");
 			flash.success=true;
@@ -12,6 +13,6 @@ angular.module("heyyo").controller("HomeController",function($scope,$http,flash)
 			flash.success=false;
 			$scope.$emit("flash");
 		});
-		$scope.command="";
+		$scope.form={};
 	};
 });

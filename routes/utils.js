@@ -3,12 +3,12 @@ var taskModel = require('./../models/taskmodel');
 var client=require("twilio")(env.twilioAccountSid, env.twilioAuthToken);
 
 
-function sendText(message){
-	if (env.supressTextMessages==="true") 
+function sendText(message, number){
+	if (env.supressTextMessages==="true" || !number) 
 		return;
 	console.log("SENDING!!! "+message);
 	client.sendSms({
-		to: env.mobile,
+		to: number,
 		from: env.twilioAssignedPhoneNumber,
 		body: message
 	}, function(err, responseData){
@@ -42,9 +42,9 @@ function parseMsg(message, cb){
 				ts:ts
 			};
 			if (!task.id || !task.body || !task.ts){
-				throw "bad format";
+				return cb("bad format");
 			}
-			cb(task);
+			return cb(null, task);
 		});
 	
 	} catch(e){
