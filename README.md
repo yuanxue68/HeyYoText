@@ -3,6 +3,8 @@
 
 A simple web app that allow you to create modify and receive reminders through sms using twilio
 Trial account cant send messages to unverifield account, so wont wont be able to try it on this hosting :(
+### Sample Usage
+![alt tag](http://i.imgur.com/hD2RdEo.jpg)
 
 # How to run it locally:
 #### clone repository
