@@ -1,8 +1,8 @@
 # HeyYoText
 [List of Commands](https://enigmatic-ridge-44202.herokuapp.com/#/help) 
 
-A simple web app that allow you to create modify and receive reminders through sms using twilio
-Trial account cant send messages to unverifield account, so wont wont be able to try it on this hosting :(
+A simple web app that allows you to create, modify and receive reminders through sms using twilio.
+Trial accounts can not send messages to unverifield account, so you will have to run it on local to try it :(
 ### Sample Usage
 ![alt tag](http://i.imgur.com/hD2RdEo.jpg)
 
